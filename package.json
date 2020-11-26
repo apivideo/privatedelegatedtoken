@@ -1,0 +1,26 @@
+{
+  "name": "videouploadtodiscord",
+  "version": "1.0.0",
+  "description": "upload videos to discord",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "startprod": "babel-node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dougsillars/videoUploadToDiscord.git"
+  },
+  "keywords": [
+    "video",
+    "upload",
+    "discordjs"
+  ],
+  "author": "doug",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dougsillars/videoUploadToDiscord/issues"
+  },
+  "homepage": "https://github.com/dougsillars/videoUploadToDiscord#readme"
+}
