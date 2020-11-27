@@ -9,7 +9,7 @@ body {background-color: white;
     margin: auto;
     text-align: center;
     width: 50%;
-    height: 30%; 
+   
     padding:10px;
     font-size: xx-large;
     color:black;
@@ -31,7 +31,7 @@ body {background-color: white;
   #videoName{
     background-color: #fa5B30;
     width:35%;
-    height: 10%;
+    height: 30px;
     margin: auto;
     display: inline-block;
     text-align: center;
@@ -47,7 +47,23 @@ body {background-color: white;
   #videoDescription{
     background-color: #fa5B30;
     width:35%;
-    height: 10%;
+    height: 30px;
+    margin: auto;
+    display: inline-block;
+    text-align: center;
+    border-radius: 25px;
+    padding-top: 5px;
+    font-size: large;
+    color:white;
+  }
+  #discordChannel-label{
+    color:black;
+    font-size: large;
+  }
+  #discordChannel{
+    background-color: #fa5B30;
+    width:35%;
+    height: 30px;
     margin: auto;
     display: inline-block;
     text-align: center;
@@ -59,7 +75,7 @@ body {background-color: white;
   #video-file-label{
     background-color: #fa5B30;
     width:50%;
-    height: 30%;
+    height: 60px;
     margin: auto;
     display: inline-block;
     text-align: center;
@@ -68,9 +84,20 @@ body {background-color: white;
     font-size: x-large;
     color:white;
   }
+  #information{
+    margin: auto;
+    text-align: center;
+    width: 50%;
+    height: 60px; 
+    padding:10px;
+    font-size: xx-large;
+    color:black;
+   
+   
+  }
   #video-information{
     width:50%;
-    height: 10%;
+    
     margin: auto;
     text-align: center;
     border-radius: 25px;
@@ -81,7 +108,18 @@ body {background-color: white;
   }
   #chunk-information{
     width:50%;
-    height: 10%;
+   
+    margin: auto;
+    text-align: center;
+    border-radius: 25px;
+    padding-top: 30px;
+    color: #fa5B30;
+    font-size: x-large;
+
+  }
+  #file-update{
+    width:50%;
+   
     margin: auto;
     text-align: center;
     border-radius: 25px;

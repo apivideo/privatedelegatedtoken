@@ -15,6 +15,8 @@
 		<input type="text" id="videoName" value= "my video"> <br/>
 		<label for="videoDescription" id="videoDescription-label">Description:</label> 
 		<input type="text" id="videoDescription" value= "watch this cool video"> <br/>
+		<label for="discordChannel" id="discordChannel-label">Discord Channel:</label> 
+		<input type="text" id="discordChannel" value= "781116401800839192"> <br/>
 		<label for="video-file" id="video-file-label">
 			Click here to pick your video
 		</label>
@@ -22,15 +24,15 @@
 
 	</div>
 	<br>	
-	<br>
-	<div id="video-information" style="width: 50%"></div>
-	<div id="chunk-information" style="width: 50%"></div>
-	<div id="file-update" style="width: 50%"></div>
-	
+	<div id ="information">
+		<div id="video-information" style="width: 50%"></div>
+		<div id="chunk-information" style="width: 50%"></div>
+		<div id="file-update" style="width: 50%"></div>
+	</div>
 	
 	<script>
 	  const input = document.querySelector('#video-file');
-	  const url ="https://sandbox.api.video/upload?token=toYSIwyzSd1ICJzMwdSYBrO";
+	  const url ="https://sandbox.api.video/upload?token=to1R5LOYV0091XN3GQva27OS";
 	  var chunkCounter =0;
 	  //break into 1 MB chunks for demo purposes
 	  const chunkSize = 1000000;  
@@ -45,6 +47,7 @@
 		document.getElementById("video-information").innerHTML = "There will be " + numberofChunks + " chunks uploaded."
 		var start =0; 
 		chunkCounter=0;
+		document.getElementById("file-update").innerHTML ="";
 		videoId="";
 		var chunkEnd = start + chunkSize;
 		//upload the first chunk to get the videoId
@@ -122,38 +125,25 @@
 								//post the video infromation 
 								//now we can add the title and description
 								//and post to Discord
-								let successForm = document.createElement("form");
-								document.body.appendChild(successForm);
-							    let formVideoId = document.createElement("input"); 
-								formVideoId.name="videoId";
-								formVideoId.value=videoId;
-							    let formVideoName = document.createElement("input"); 
-								formVideoName.name="videoName";
-								console.log("videoName",videoName.value);
-								formVideoName.value=videoName.value;
-								let formVideoDesc = document.createElement("input"); 
-								formVideoDesc.name="videoDesc";
-								console.log("videoDesc",videoDescription.value);
-								formVideoDesc.value=videoDescription.value;
+								
+								var jsonUpload = { "videoId": videoId,
+													"videoName": videoName.value,
+													"videoDesc": videoDescription.value,
+													"channel": discordChannel.value
+													};
 
-
-								successForm.method = "POST";
-								successForm.action = "/";
-								successForm.append(formVideoId);
-								successForm.append(formVideoName);
-								successForm.append(formVideoDesc);
-								console.log(successForm);
-								//successForm.submit();
+								console.log("json", jsonUpload);
 
 								//send form with video information to Node
 								//node will update the video on api.video,
 								//and then send on to the servive
 								var pReq = new XMLHttpRequest();
-								pReq.open("POST", "/", true);
+								pReq.open("POST", "/");
+								pReq.setRequestHeader("Content-type", "application/json");
 								pReq.onload = function (oEvent) {
 									document.getElementById("file-update").innerHTML = "Video Posted";
 								}
-								pReq.send(successForm);
+								pReq.send(JSON.stringify(jsonUpload));
 
 							}
 							
