@@ -60,6 +60,38 @@ body {background-color: white;
     color:black;
     font-size: large;
   }
+  #mp4-label{
+    color:black;
+    font-size: large;
+  }
+  #mp4{
+    background-color: #fa5B30;
+    width:25%;
+    height: 30px;
+    margin: auto;
+    display: inline-block;
+    text-align: center;
+    border-radius: 25px;
+    padding-top: 5px;
+    font-size: large;
+    color:white;
+  }
+  #public-label{
+    color:black;
+    font-size: large;
+  }
+  #public{
+    background-color: #fa5B30;
+    width:25%;
+    height: 30px;
+    margin: auto;
+    display: inline-block;
+    text-align: center;
+    border-radius: 25px;
+    padding-top: 5px;
+    font-size: large;
+    color:white;
+  }
   #discordChannel{
     background-color: #fa5B30;
     width:35%;
@@ -84,16 +116,27 @@ body {background-color: white;
     font-size: x-large;
     color:white;
   }
+
   #information{
     margin: auto;
     text-align: center;
     width: 50%;
-    height: 60px; 
     padding:10px;
     font-size: xx-large;
     color:black;
    
    
+  }
+  #token-information{
+    width:50%;
+    
+    margin: auto;
+    text-align: center;
+    border-radius: 25px;
+    padding: 10px;
+    color: #fa5B30;
+    font-size: x-large;
+
   }
   #video-information{
     width:50%;
@@ -101,7 +144,7 @@ body {background-color: white;
     margin: auto;
     text-align: center;
     border-radius: 25px;
-    padding-top: 30px;
+    padding: 10px;
     color: #fa5B30;
     font-size: x-large;
 
@@ -112,7 +155,7 @@ body {background-color: white;
     margin: auto;
     text-align: center;
     border-radius: 25px;
-    padding-top: 30px;
+    padding: 10px;
     color: #fa5B30;
     font-size: x-large;
 
@@ -123,8 +166,13 @@ body {background-color: white;
     margin: auto;
     text-align: center;
     border-radius: 25px;
-    padding-top: 30px;
+    padding: 10px;
     color: #fa5B30;
     font-size: x-large;
 
+  }  
+  #footer{
+    font-size: large;
+    color: black;
+    padding:10px;
   }
