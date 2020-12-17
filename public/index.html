@@ -63,7 +63,7 @@
 	<br/>
 	<div id="footer">
 		This app was created with <a href="https://api.video">api.video</a>.<br/>
-		Get the <a href="https://github.com/dougsillars/videoUploadToDiscord">sample code</a>, and read about <a href="https://a.video/works/upload-a-video-to-discord">how we built the demo.</a><br/>
+		Get the <a href="https://github.com/dougsillars/privatedelegatedtoken">sample code</a>, and read about <a href="https://a.video/works/private-delegated-upload">how we built the demo.</a><br/>
 		More sample apps can be found at <a href="https://a.video">a.video</a>.
 
 	</div>
@@ -112,7 +112,7 @@
 				videoId = tokenVideoId.videoId;
 				var delegatedToken = tokenVideoId.token;
 				var tokenExpires = tokenVideoId.expires;
-				document.getElementById("token-information").innerHTML = "New token "+ delegatedToken + " created. Expires: " +tokenExpires;
+				document.getElementById("token-information").innerHTML = "New token "+ delegatedToken + " created. <br/>Expires: " +tokenExpires;
 				url = "https://sandbox.api.video/upload?token=" + delegatedToken;
 				console.log("new url", url);
 
