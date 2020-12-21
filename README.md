@@ -1,5 +1,6 @@
-# videoUploadToDiscord
-NodeJS app to upload videos to a Discord Bot
+# Private Delegated tokens & Delegated token adding options to video upload
+NodeJS app to upload videos to api.video
+
 
 
 ## Installation 
@@ -9,17 +10,12 @@ add environmental variables
 install node dependancies
 node src/index.js
 
-## To run on YOUR Discord channel
+## What the app does
 
-1. connect the apivideo_uploader bot to your channel:
-https://discord.com/oauth2/authorize?client_id=780911671153000479&scope=bot
+When you add a video, there is a request to api.video to create a video. This creates the video 'container' with all the options selected in the form.  A delegated token (public upload key) is also created, with a 90s expiration.
 
-2. In Discord, get the Channel ID:  
-   * Trun on developer mode - click the settings next to your name
-   * appearance - scroll to the bottom - enable developer mode
-   * now right click the channel you want the bot in, and right click. Cop[y the id
-   
+The video container id (videoId) and the token are sent back to the broswer, and the upload begins.  The video is split into 1 MB segments. As long as the first segment uplads in 90s the token TTL), the video will successfully upload.
 
-On the webpage - name and describe the video - paste in the channelId.  Then select your video. IT will upload and post automatically to your Discord channel.
+## Live demo
 
-This app uses api.video delegated tokens, and posts to the sandbox - where videos are watemarked (and removed after 72 hours).  Create your own account & [deletgated token](https://api.video/blog/tutorials/uploading-large-files-with-javascript) at [api.vuide](https://api.video).
+http://privatelyupload.a.video/

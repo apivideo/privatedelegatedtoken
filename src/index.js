@@ -50,7 +50,6 @@ app.post('/createVideo', (req,res) => {
 	var mp4  = true;
 	if(req.body.mp4Support === "false"){
 		mp4=false;
-
 	}
 	var title = req.body.title;
 	var descr = req.body.description;
