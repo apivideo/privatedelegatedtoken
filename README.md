@@ -5,10 +5,10 @@ NodeJS app to upload videos to api.video
 
 ## Installation 
 
-Clone github repo
-add environmental variables
-install node dependancies
-node src/index.js
+1. Clone github repo
+2. add environmental variables
+3. install node dependancies
+4. Run with 'node src/index.js'
 
 ## What the app does
 
