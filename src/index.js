@@ -69,6 +69,26 @@ app.post('/createVideo', (req,res) => {
 		console.log(video);
 		var videoId = video.videoId;
 		console.log(videoId);
+		//create a delegated token. The Node API client supports this.
+		//const tokenCreationPayload = ''; // 
+		//tokenCreationPayload.setTtl()=90; // Time in seconds that the token will be active. A value of 0 means that the token has no exipration date. The default is to have no expiration.
+		const ttl = 90;
+		let tokenResult = client.uploadTokens.createToken({"ttl": ttl});
+		tokenResult.then(function (token){
+			console.log("token",token);
+			var delegatedToken = token.token;
+			var tokenExpiry = token.expiresAt;
+			console.log("new token", delegatedToken);
+			console.log("new token expires", tokenExpiry);
+			var tokenVideoIdJson = {"token": delegatedToken,
+									"expires":tokenExpiry,
+									"videoId": videoId};
+			res.setHeader('Content-Type', 'application/json');
+			res.end(JSON.stringify(tokenVideoIdJson));
+
+		});
+
+		/*
 		//ok have a new videoId for the video - now create a delegated token
 		//since the new delegated token with TTL is not yet in the Node SDK, I'll have to authenticate 
 		//and then request a token - 2 calls to api.video
@@ -119,7 +139,7 @@ app.post('/createVideo', (req,res) => {
 			
 	 	   
 		});	
-
+		*/
 		
 	}).catch((error) => {
 		console.log(error);
