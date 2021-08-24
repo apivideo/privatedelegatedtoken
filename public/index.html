@@ -105,28 +105,36 @@
 			qReq.open("POST", "/createVideo");
 			qReq.setRequestHeader("Content-type", "application/json");
 			qReq.onload = function (oEvent) {
-				//once we create the video id do stuff
-				var tokenVideoId = JSON.parse(qReq.response);
-				
-				console.log(tokenVideoId);
-				//TODO grabVideoId and token ID
-				videoId = tokenVideoId.videoId;
-				var delegatedToken = tokenVideoId.token;
-				var tokenExpires = tokenVideoId.expires;
-				document.getElementById("token-information").innerHTML = "New token "+ delegatedToken + " created. <br/>Expires: " +tokenExpires;
-				url = "https://sandbox.api.video/upload?token=" + delegatedToken;
-				console.log("new url", url);
 
-				file = input.files[0];
-				filename = input.files[0].name;
-				numberofChunks = Math.ceil(file.size/chunkSize);
-				document.getElementById("video-information").innerHTML = "There will be " + numberofChunks + " chunks uploaded."
-				var start =0; 
-				chunkCounter=0;
-				document.getElementById("file-update").innerHTML ="";
-				var chunkEnd = start + chunkSize;
-				//upload the first chunk to get the videoId
-				createChunk(videoId, start);
+				console.log(qReq.status);
+				//once we create the video id do stuff
+				if(qReq.status == 429){
+					//rate limited
+					document.getElementById("token-information").innerHTML = "Your uploads have been rate limited. We allow 5 uploads/hour with this demo app. Please try again in a bit."
+				}
+				else{
+					var tokenVideoId = JSON.parse(qReq.response);
+					
+					console.log(tokenVideoId);
+					//TODO grabVideoId and token ID
+					videoId = tokenVideoId.videoId;
+					var delegatedToken = tokenVideoId.token;
+					var tokenExpires = tokenVideoId.expires;
+					document.getElementById("token-information").innerHTML = "New token "+ delegatedToken + " created. <br/>Expires: " +tokenExpires;
+					url = "https://sandbox.api.video/upload?token=" + delegatedToken;
+					console.log("new url", url);
+
+					file = input.files[0];
+					filename = input.files[0].name;
+					numberofChunks = Math.ceil(file.size/chunkSize);
+					document.getElementById("video-information").innerHTML = "There will be " + numberofChunks + " chunks uploaded."
+					var start =0; 
+					chunkCounter=0;
+					document.getElementById("file-update").innerHTML ="";
+					var chunkEnd = start + chunkSize;
+					//upload the first chunk to get the videoId
+					createChunk(videoId, start);
+				}
 			}
 			qReq.send(JSON.stringify(jsonUpload));
 
