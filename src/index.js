@@ -11,25 +11,28 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 var request = require("request");
-const Discord = require('discord.js');
-const discordClient = new Discord.Client();
-// when the client is ready, run this code
-// this event will only trigger one time after logging in
-discordClient.once('ready', () => {
-	console.log('discord Ready!');
 
-});
-
-
-
+//rate limiting to protect the demos
+const rateLimit = require("express-rate-limit");
+app.use(
+	rateLimit({
+	  windowMs:  60 * 60 * 1000, // 1 hour duration in milliseconds
+	  max: 5,
+	  message: "You exceeded 5 requests in 1 hour.",
+	  headers: true,
+	})
+  );
 
 
 //apivideo
-const apiVideo = require('@api.video/nodejs-sdk');
-
+//const apiVideo = require('@api.video/nodejs-sdk');
+//august 2021 update to the new Node JS api client
+const apiVideoClient = require('@api.video/nodejs-client');
 
 //if you chnage the key to sandbox or prod - make sure you fix the delegated toekn on the upload page
 const apiVideoKey = process.env.apiProductionKey;
+client = new apiVideoClient({ apiKey: apiVideoKey});
+
 
 // website demo
 //get request is the initial request - load the HTML page with the form
@@ -54,10 +57,10 @@ app.post('/createVideo', (req,res) => {
 	var title = req.body.title;
 	var descr = req.body.description;
 
-	client = new apiVideo.Client({ apiKey: apiVideoKey});	
+	console.log("title", title);
 	
 	
-	let result = client.videos.create(title, {	"title": title, "mp4Support": mp4,
+	let result = client.videos.create({	"title": title, "mp4Support": mp4,
 		"public": public, 
 		"description": descr,					
 	});
@@ -128,73 +131,6 @@ app.post('/createVideo', (req,res) => {
 });
 
 
-app.post('/', (req, res) => {
-	console.log(req.body);
-	//console.log(req);
-	//get values from POST body
-	let videoId=req.body.videoId;
-	let videoName = req.body.videoName;
-	let videoDesc = req.body.videoDesc;
-	let discordChannel = req.body.channel;
-	let tag = "Discord";
-	
-
-	
-
-	client = new apiVideo.Client({ apiKey: apiVideoKey});
-	
-	
-
-	let result = client.videos.update(videoId, {	title: videoName, 
-													description: videoDesc,					
-													tags: [tag]
-											});
-											console.log(result);
-	result.then(function(video) {
-		console.log("video uploaded and renamed");
-		//video name changed.  
-		//now send it to discord
-		//
-		console.log(video);
-		var playerUrl = video.assets.player;
-
-		//we now have updated the video, and have the url - butu let's wait until the video is playeble before posting on discord (so the oembed works properly.)
-		function checkPlayable(videoId) {
-			console.log("checking mp4 encoding status");
-			let status = client.videos.getStatus(videoId);
-			status.then(function(videoStats){
-			 // console.log(videoStats);
-			  let playable = videoStats.encoding.playable;
-			  let qualitylist = videoStats.encoding.qualities;
-			  console.log("is video playable?", playable);
-			  //only look for the mp4 if the video is playable
-			  //when still encoding, sometimes the mp4 status does not appear immediately
-			  if(playable){
-				 console.log("video is playable");
-				//send to discord
-				//send 200 back to page
-				var channel = discordClient.channels.cache.get(discordChannel);
-				channel.send( videoDesc + playerUrl);
-				res.sendStatus(200);
-
-			  }else{
-				  setTimeout(checkPlayable,2000,videoId);
-			  }
-		  }).catch((error) => {
-				console.log(error);
-			});	
-		}
-		checkPlayable(videoId);
-
-
-
-	}).catch((error) => {
-	    console.log(error);
-	});
-	
-	
-
-});
 
 
 //testing on 3021
