@@ -49,7 +49,9 @@ app.post('/createVideo', (req,res) => {
 	var public = true;
 	if(req.body.public === "false"){
 		public=false;
+		console.log("false!!");
 	}
+	console.log ("public", public);
 	var mp4  = true;
 	if(req.body.mp4Support === "false"){
 		mp4=false;
@@ -58,12 +60,14 @@ app.post('/createVideo', (req,res) => {
 	var descr = req.body.description;
 
 	console.log("title", title);
-	
-	
-	let result = client.videos.create({	"title": title, "mp4Support": mp4,
-		"public": public, 
-		"description": descr,					
-	});
+	let params = {	"title": title, 
+					"_public": public, 
+				"mp4Support": mp4,
+				
+				"description": descr				
+	}
+	console.log("params", params);
+	let result = client.videos.create(params);
 	console.log(result);
 	result.then(function(video) {
 		console.log(video);
