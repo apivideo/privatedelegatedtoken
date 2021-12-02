@@ -27,22 +27,22 @@
 </head>
 
 <body>
-	
+
 	<br>
 	<div id="action__upload">
 		Upload a video with a unique delegated token<br/>
 		<img id="uploadFile__icon" draggable="false" src = "upload.png">
 		<br/>
-		<label for="videoName" id="videoName-label">Video Title:</label> 
+		<label for="videoName" id="videoName-label">Video Title:</label>
 		<input type="text" id="videoName" value= "my video"> <br/>
-		<label for="videoDescription" id="videoDescription-label">Description:</label> 
+		<label for="videoDescription" id="videoDescription-label">Description:</label>
 		<input type="text" id="videoDescription" value= "watch this cool video"> <br/>
-		<label for="mp4" id="mp4-label">save mp4?:</label> 
+		<label for="mp4" id="mp4-label">save mp4?:</label>
 		<select id="mp4" name="mp4">
 			<option value = "true">true</option>
 			<option value = "false"> false</option>
 		</select><br/>
-		<label for="public" id="public-label">Video is public?:</label> 
+		<label for="public" id="public-label">Video is public?:</label>
 		<select id="public" name="public">
 			<option value = "true">true</option>
 			<option value = "false"> false</option>
@@ -53,7 +53,7 @@
 		<input type="file" id="video-file" style='display:none'>
 
 	</div>
-	<br>	
+	<br>
 	<div id ="information">
 		<div id="token-information" style="width: 50%"></div>
 		<div id="video-information" style="width: 50%"></div>
@@ -63,20 +63,20 @@
 	<br/>
 	<div id="footer">
 		This app was created with <a href="https://api.video">api.video</a>.<br/>
-		Get the <a href="https://github.com/dougsillars/privatedelegatedtoken">sample code</a>, and read about <a href="https://a.video/works/private-delegated-upload">how we built the demo.</a><br/>
+		Get the <a href="https://github.com/apivideo/privatedelegatedtoken">sample code</a>, and read about <a href="https://a.video/works/private-delegated-upload">how we built the demo.</a><br/>
 		More sample apps can be found at <a href="https://a.video">a.video</a>.
 
 	</div>
-	
+
 	<script>
 	  const input = document.querySelector('#video-file');
-	   
+
 
 	  var url ="https://sandbox.api.video/upload?token=";
 	  var chunkCounter =0;
 	  //break into 1 MB chunks for demo purposes
 	  //new mim chunk size is 5MB (august 2021)
-	  const chunkSize = 6000000;  
+	  const chunkSize = 6000000;
 	  var videoId = "";
 	  var playerUrl = "";
 	  var file;
@@ -94,7 +94,7 @@
             videoId="";
 			console.log(title, description, mp4, public);
 			var qReq = new XMLHttpRequest();
-			
+
 			var jsonUpload = { "title": title,
 								"description": description,
 								"mp4Support": mp4,
@@ -114,7 +114,7 @@
 				}
 				else{
 					var tokenVideoId = JSON.parse(qReq.response);
-					
+
 					console.log(tokenVideoId);
 					//TODO grabVideoId and token ID
 					videoId = tokenVideoId.videoId;
@@ -128,7 +128,7 @@
 					filename = input.files[0].name;
 					numberofChunks = Math.ceil(file.size/chunkSize);
 					document.getElementById("video-information").innerHTML = "There will be " + numberofChunks + " chunks uploaded."
-					var start =0; 
+					var start =0;
 					chunkCounter=0;
 					document.getElementById("file-update").innerHTML ="";
 					var chunkEnd = start + chunkSize;
@@ -138,13 +138,13 @@
 			}
 			qReq.send(JSON.stringify(jsonUpload));
 
-		
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
+
 			function createChunk(videoId, start, end){
 				chunkCounter++;
 				console.log("created chunk: ", chunkCounter);
@@ -156,29 +156,29 @@
 				if(videoId.length >0){
 					//we have a videoId
 					chunkForm.append('videoId', videoId);
-					console.log("added videoId");	
-					
+					console.log("added videoId");
+
 				}
 				chunkForm.append('file', chunk, filename);
 				console.log("added file");
 
-				
+
 				//created the chunk, now upload iit
 				uploadChunk(chunkForm, start, chunkEnd);
 			}
-		
+
 			function uploadChunk(chunkForm, start, chunkEnd){
 				var oReq = new XMLHttpRequest();
-				oReq.upload.addEventListener("progress", updateProgress);	
+				oReq.upload.addEventListener("progress", updateProgress);
 				oReq.open("POST", url, true);
 				var blobEnd = chunkEnd-1;
 				var contentRange = "bytes "+ start+"-"+ blobEnd+"/"+file.size;
 				oReq.setRequestHeader("Content-Range",contentRange);
 				console.log("Content-Range", contentRange);
 				function updateProgress (oEvent) {
-					if (oEvent.lengthComputable) {  
+					if (oEvent.lengthComputable) {
 					var percentComplete = Math.round(oEvent.loaded / oEvent.total * 100);
-					
+
 					var totalPercentComplete = Math.round((chunkCounter -1)/numberofChunks*100 +percentComplete/numberofChunks);
 					document.getElementById("chunk-information").innerHTML = "Chunk # " + chunkCounter + " is " + percentComplete + "% uploaded. Total uploaded: " + totalPercentComplete +"%";
 				//	console.log (percentComplete);
@@ -196,11 +196,11 @@
 								videoId = resp.videoId;
 								//playerUrl = resp.assets.player;
 								console.log("videoId",videoId);
-								
+
 								//now we have the video ID - loop through and add the remaining chunks
 								//we start one chunk in, as we have uploaded the first one.
 								//next chunk starts at + chunkSize from start
-								start += chunkSize;	
+								start += chunkSize;
 								//if start is smaller than file size - we have more to still upload
 								if(start<file.size){
 									//create the new chunk
@@ -213,20 +213,20 @@
 									document.getElementById("video-information").innerHTML = "all uploaded! Watch the video <a href=\'" + playerUrl +"\' target=\'_blank\'>here</a>" ;
 
 								}
-								
+
 				};
 				oReq.send(chunkForm);
-		
-				
-				
+
+
+
 			}
 		}
-	
+
 	  });
 	</script>
-	
-	
-	
+
+
+
 </body>
 
 </html>

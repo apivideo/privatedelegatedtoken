@@ -1,6 +1,6 @@
 {
   "name": "videouploadtodiscord",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "upload videos to discord",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dougsillars/videoUploadToDiscord.git"
+    "url": "git+https://github.com:apivideo/privatedelegatedtoken.git"
   },
   "keywords": [
     "video",
@@ -20,9 +20,9 @@
   "author": "doug",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dougsillars/videoUploadToDiscord/issues"
+    "url": "https://github.com/apivideo/privatedelegatedtoken/issues"
   },
-  "homepage": "https://github.com/dougsillars/videoUploadToDiscord#readme",
+  "homepage": "https://github.com/apivideo/privatedelegatedtoken#readme",
   "dependencies": {
     "@api.video/nodejs-client": "^2.0.8",
     "@api.video/nodejs-sdk": "^1.8.5",
