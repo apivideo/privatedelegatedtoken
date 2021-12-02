@@ -30,14 +30,14 @@ app.use(
 const apiVideoClient = require('@api.video/nodejs-client');
 
 //if you chnage the key to sandbox or prod - make sure you fix the delegated toekn on the upload page
-const apiVideoKey = process.env.apiProductionKey;
+const apiVideoKey = process.env.apiSandboxKey;
 client = new apiVideoClient({ apiKey: apiVideoKey});
 
 
 // website demo
 //get request is the initial request - load the HTML page with the form
 app.get('/', (req, res) => {
-		res.sendFile(path.join(__dirname, '../public', 'index.html'));  
+		res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
 
@@ -60,11 +60,11 @@ app.post('/createVideo', (req,res) => {
 	var descr = req.body.description;
 
 	console.log("title", title);
-	let params = {	"title": title, 
-					"_public": public, 
+	let params = {	"title": title,
+					"_public": public,
 				"mp4Support": mp4,
-				
-				"description": descr				
+
+				"description": descr
 	}
 	console.log("params", params);
 	let result = client.videos.create(params);
@@ -74,7 +74,7 @@ app.post('/createVideo', (req,res) => {
 		var videoId = video.videoId;
 		console.log(videoId);
 		//create a delegated token. The Node API client supports this.
-		//const tokenCreationPayload = ''; // 
+		//const tokenCreationPayload = ''; //
 		//tokenCreationPayload.setTtl()=90; // Time in seconds that the token will be active. A value of 0 means that the token has no exipration date. The default is to have no expiration.
 		const ttl = 90;
 		let tokenResult = client.uploadTokens.createToken({"ttl": ttl});
@@ -94,23 +94,23 @@ app.post('/createVideo', (req,res) => {
 
 		/*
 		//ok have a new videoId for the video - now create a delegated token
-		//since the new delegated token with TTL is not yet in the Node SDK, I'll have to authenticate 
+		//since the new delegated token with TTL is not yet in the Node SDK, I'll have to authenticate
 		//and then request a token - 2 calls to api.video
 		var authOptions = {
 			method: 'POST',
 			url: 'https://ws.api.video/auth/api-key',
 			headers: {
 				accept: 'application/json'
-				
+
 			},
 			json: {"apiKey":apiVideoKey}
 
 		}
-		console.log(authOptions);	
+		console.log(authOptions);
 		request(authOptions, function (error, response, body) {
 			if (error) throw new Error(error);
 			//this will give me the api key
-			
+
 			var authToken = body.access_token;
 			console.log(authToken);
 			//now use this to generate a delegated toke with a ttl of 90s
@@ -123,7 +123,7 @@ app.post('/createVideo', (req,res) => {
 					authorization: 'Bearer ' +authToken
 				},
 				json: {"ttl":tokenTTL}
-	
+
 			}
 			request(tokenOptions, function (error, response, body) {
 				if (error) throw new Error(error);
@@ -140,14 +140,14 @@ app.post('/createVideo', (req,res) => {
 			});
 
 
-			
-	 	   
-		});	
+
+
+		});
 		*/
-		
+
 	}).catch((error) => {
 		console.log(error);
-	});	
+	});
 
 
 
@@ -169,4 +169,3 @@ process.on('uncaughtException', function(err) {
 
 
 
-	
