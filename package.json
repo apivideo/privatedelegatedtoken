@@ -28,7 +28,7 @@
     "@api.video/nodejs-sdk": "^1.8.5",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-rate-limit": "^5.3.0",
     "limiter": "^2.1.0",
     "nodemon": "^2.0.6",
